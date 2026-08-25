@@ -63,7 +63,7 @@
     "scripts": {
         "cs:check": "php-cs-fixer check --ansi --verbose --diff",
         "cs:fix": "php-cs-fixer fix --ansi --verbose --diff",
-        "mutation:check": "infection --ansi --with-uncovered --static-analysis-tool=phpstan",
+        "mutation:check": "infection --with-uncovered --static-analysis-tool=phpstan",
         "phpstan:baseline": "phpstan analyse --ansi --verbose --generate-baseline=phpstan-baseline.php",
         "phpstan:check": "phpstan analyse --ansi --verbose",
         "test:all": [

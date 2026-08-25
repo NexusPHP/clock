@@ -1,0 +1,95 @@
+name: Unit Tests
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    paths:
+      - '**.php'
+      - .github/workflows/unit-tests.yml
+      - composer.json
+      - phpunit.dist.xml
+  pull_request:
+    paths:
+      - '**.php'
+      - .github/workflows/unit-tests.yml
+      - composer.json
+      - phpunit.dist.xml
+
+jobs:
+  main:
+    name: Unit Tests [PHP ${{ matrix.php-version }}]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - '8.3'
+          - '8.4'
+          - '8.5'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer
+          coverage: xdebug
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "COMPOSER_CACHE_DIR=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache composer dependencies
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.composer-cache.outputs.COMPOSER_CACHE_DIR }}
+          key: composer-${{ matrix.php-version }}-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            composer-${{ matrix.php-version }}
+            composer-
+
+      - name: Install dependencies
+        run: composer update --ansi
+
+      - name: Run Nexus Clock Test Suite
+        run: composer test:unit
+        env:
+          TACHYCARDIA_MONITOR_GA: enabled
+
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329 # v2.3.8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/phpunit/clover.xml
+          parallel: true
+          flag-name: PHP ${{ matrix.php-version }}
+
+  coveralls-finish:
+    name: Coveralls Finished
+    needs: [main]
+    if: ${{ always() }}
+    permissions:
+      actions: write
+      contents: read
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Finish Coveralls
+        uses: coverallsapp/github-action@8d6379e14d29928660c4ba802d8e85393440b329 # v2.3.8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
