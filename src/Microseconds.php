@@ -21,7 +21,8 @@ namespace Nexus\Clock;
 final class Microseconds
 {
     public const int PER_SECOND = 1_000_000;
-    public const float MAX_SECONDS = 9_000_000_000_000.0;
+    public const int MAX = 9_000_000_000_000_000_000;
+    public const float MAX_SECONDS = self::MAX / self::PER_SECOND;
 
     /**
      * Converts a duration in seconds to whole microseconds, clamping non-positive durations to zero.
