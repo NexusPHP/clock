@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Nexus\Clock\Tests;
 
+use Nexus\Clock\HighResolutionStopwatch;
 use Nexus\Clock\InvalidDurationException;
 use Nexus\Clock\NativeDelay;
 use Nexus\PHPUnit\Tachycardia\Attribute\TimeLimit;
@@ -26,14 +27,14 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(NativeDelay::class)]
 final class NativeDelayTest extends TestCase
 {
-    private const int NANOSECONDS_PER_SECOND = 1_000_000_000;
-
     #[TimeLimit(2.50)]
     public function testSleepBlocksForWholeAndFractionalSeconds(): void
     {
-        $start = hrtime(true);
+        $stopwatch = new HighResolutionStopwatch();
+
+        $start = $stopwatch->read();
         (new NativeDelay())->sleep(1.55);
-        $elapsed = (hrtime(true) - $start) / self::NANOSECONDS_PER_SECOND;
+        $elapsed = $stopwatch->read() - $start;
 
         self::assertGreaterThanOrEqual(1.55, $elapsed);
         self::assertLessThan(2.0, $elapsed);
@@ -41,9 +42,11 @@ final class NativeDelayTest extends TestCase
 
     public function testSleepBlocksForSubSecondDurations(): void
     {
-        $start = hrtime(true);
+        $stopwatch = new HighResolutionStopwatch();
+
+        $start = $stopwatch->read();
         (new NativeDelay())->sleep(0.08);
-        $elapsed = (hrtime(true) - $start) / self::NANOSECONDS_PER_SECOND;
+        $elapsed = $stopwatch->read() - $start;
 
         self::assertGreaterThanOrEqual(0.08, $elapsed);
         self::assertLessThan(0.5, $elapsed);
@@ -52,9 +55,11 @@ final class NativeDelayTest extends TestCase
     #[DataProvider('provideSleepReturnsImmediatelyOnNonPositiveSecondsCases')]
     public function testSleepReturnsImmediatelyOnNonPositiveSeconds(float|int $seconds): void
     {
-        $start = hrtime(true);
+        $stopwatch = new HighResolutionStopwatch();
+
+        $start = $stopwatch->read();
         (new NativeDelay())->sleep($seconds);
-        $elapsed = (hrtime(true) - $start) / self::NANOSECONDS_PER_SECOND;
+        $elapsed = $stopwatch->read() - $start;
 
         self::assertLessThan(0.05, $elapsed);
     }
