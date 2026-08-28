@@ -1,7 +1,7 @@
 # Nexus Clock
 
-[![PHP version](https://img.shields.io/badge/php-%E2%89%A5%208.3-777bb4?logo=php&logoColor=white)](https://php.net)
-[![Latest Stable Version](https://poser.pugx.org/nexusphp/clock/v)](//packagist.org/packages/nexusphp/clock)
+[![PHP](http://poser.pugx.org/nexusphp/clock/require/php)](https://packagist.org/packages/nexusphp/clock)
+[![Latest Stable Version](http://poser.pugx.org/nexusphp/clock/v)](https://packagist.org/packages/nexusphp/clock)
 [![Unit Tests](https://github.com/NexusPHP/clock/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/NexusPHP/clock/actions/workflows/unit-tests.yml)
 [![Code Style](https://github.com/NexusPHP/clock/actions/workflows/code-style.yml/badge.svg)](https://github.com/NexusPHP/clock/actions/workflows/code-style.yml)
 [![Static Analysis](https://github.com/NexusPHP/clock/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/NexusPHP/clock/actions/workflows/static-analysis.yml)
