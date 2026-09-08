@@ -2,13 +2,14 @@
 
 [![PHP](http://poser.pugx.org/nexusphp/clock/require/php)](https://packagist.org/packages/nexusphp/clock)
 [![Latest Stable Version](http://poser.pugx.org/nexusphp/clock/v)](https://packagist.org/packages/nexusphp/clock)
+[![license MIT](https://img.shields.io/github/license/nexusphp/clock)](LICENSE)
+[![Total Downloads](https://poser.pugx.org/nexusphp/clock/downloads)](//packagist.org/packages/nexusphp/clock)
 [![Unit Tests](https://github.com/NexusPHP/clock/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/NexusPHP/clock/actions/workflows/unit-tests.yml)
 [![Code Style](https://github.com/NexusPHP/clock/actions/workflows/code-style.yml/badge.svg)](https://github.com/NexusPHP/clock/actions/workflows/code-style.yml)
 [![Static Analysis](https://github.com/NexusPHP/clock/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/NexusPHP/clock/actions/workflows/static-analysis.yml)
 [![Mutation Tests](https://github.com/NexusPHP/clock/actions/workflows/mutation.yml/badge.svg)](https://github.com/NexusPHP/clock/actions/workflows/mutation.yml)
 [![Coverage Status](https://coveralls.io/repos/github/NexusPHP/clock/badge.svg?branch=1.x)](https://coveralls.io/github/NexusPHP/clock?branch=1.x)
-[![license MIT](https://img.shields.io/github/license/nexusphp/clock)](LICENSE)
-[![Total Downloads](https://poser.pugx.org/nexusphp/clock/downloads)](//packagist.org/packages/nexusphp/clock)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=plastic&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FNexusPHP%2Fclock%2F1.x)](https://dashboard.stryker-mutator.io/reports/github.com/NexusPHP/clock/1.x)
 
 Nexus Clock decouples applications from calendar time, monotonic time, and waiting for better testing.
 
